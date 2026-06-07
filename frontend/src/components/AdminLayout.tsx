@@ -48,7 +48,7 @@ export default function AdminLayout() {
     <Box>
       <Toolbar>
         <Typography variant="h6" sx={{ fontWeight: 800, color: 'primary.main' }}>
-          Tekno<span style={{ color: '#ff6f00' }}>Gündem</span>
+          Tech <span style={{ color: '#ff6f00' }}>Gündem</span>
         </Typography>
       </Toolbar>
       <Divider />

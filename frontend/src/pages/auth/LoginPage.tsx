@@ -58,7 +58,7 @@ export default function LoginPage() {
               mb: 1,
             }}
           >
-            Tekno<span style={{ color: '#ff6f00' }}>Gündem</span>
+            Tech <span style={{ color: '#ff6f00' }}>Gündem</span>
           </Typography>
           <Typography variant="body2" color="text.secondary" align="center" sx={{ mb: 3 }}>
             Yönetim paneline giriş

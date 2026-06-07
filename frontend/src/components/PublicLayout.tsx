@@ -31,7 +31,7 @@ export default function PublicLayout() {
               to="/"
               sx={{ textDecoration: 'none', color: 'primary.main', fontWeight: 800, flexGrow: 1 }}
             >
-              Tekno<span style={{ color: '#ff6f00' }}>Gündem</span>
+              Tech <span style={{ color: '#ff6f00' }}>Gündem</span>
             </Typography>
             <Button component={RouterLink} to="/" color="inherit">
               Anasayfa
@@ -65,7 +65,7 @@ export default function PublicLayout() {
             spacing={1}
           >
             <Typography variant="body2" color="text.secondary">
-              © {new Date().getFullYear()} TeknoGündem. Tüm hakları saklıdır.
+              © {new Date().getFullYear()} Tech Gündem. Tüm hakları saklıdır.
             </Typography>
             <Link component={RouterLink} to="/" variant="body2" color="text.secondary">
               Teknoloji ve gündem, tek çatı altında.
