@@ -1,0 +1,26 @@
+# Bağımlılıklar
+node_modules/
+**/node_modules/
+
+# Ortam değişkenleri (GİZLİ — asla yüklenmez)
+.env
+**/.env
+!**/.env.example
+
+# Derleme çıktıları
+dist/
+**/dist/
+build/
+
+# Loglar
+*.log
+npm-debug.log*
+
+# Editör / işletim sistemi
+.DS_Store
+.vscode/
+.idea/
+Thumbs.db
+
+# Prisma
+**/prisma/*.db
