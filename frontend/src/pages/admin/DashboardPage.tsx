@@ -9,6 +9,7 @@ import {
   Button,
   Stack,
   CircularProgress,
+  alpha,
 } from '@mui/material';
 import ArticleIcon from '@mui/icons-material/Article';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -16,27 +17,61 @@ import DraftsIcon from '@mui/icons-material/Drafts';
 import AddIcon from '@mui/icons-material/Add';
 import { postsApi } from '../../api/posts';
 import { useAuth } from '../../context/AuthContext';
+import { BRAND } from '../../theme';
 
-function StatCard({ icon, label, value }: { icon: ReactNode; label: string; value: number }) {
+function StatCard({
+  icon,
+  label,
+  value,
+  color,
+}: {
+  icon: ReactNode;
+  label: string;
+  value: number;
+  color: string;
+}) {
   return (
-    <Paper sx={{ p: 3 }} elevation={0}>
+    <Paper
+      elevation={0}
+      sx={{
+        p: 3,
+        borderRadius: 4,
+        border: `1px solid ${BRAND.border}`,
+        bgcolor: alpha('#111827', 0.5),
+        backdropFilter: 'blur(12px)',
+        position: 'relative',
+        overflow: 'hidden',
+        transition: 'border-color .25s ease, transform .25s ease',
+        '&:hover': { borderColor: alpha(color, 0.5), transform: 'translateY(-3px)' },
+        '&::after': {
+          content: '""',
+          position: 'absolute',
+          top: -40,
+          right: -40,
+          width: 130,
+          height: 130,
+          borderRadius: '50%',
+          background: `radial-gradient(circle, ${alpha(color, 0.28)}, transparent 70%)`,
+        },
+      }}
+    >
       <Stack direction="row" spacing={2} alignItems="center">
         <Box
           sx={{
-            bgcolor: 'primary.main',
+            width: 46,
+            height: 46,
+            borderRadius: 3,
+            display: 'grid',
+            placeItems: 'center',
             color: '#fff',
-            width: 48,
-            height: 48,
-            borderRadius: 2,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            background: `linear-gradient(135deg, ${color}, ${alpha(color, 0.55)})`,
+            boxShadow: `0 8px 20px -8px ${color}`,
           }}
         >
           {icon}
         </Box>
         <Box>
-          <Typography variant="h4" sx={{ fontWeight: 800 }}>
+          <Typography variant="h4" sx={{ fontWeight: 800, lineHeight: 1.1 }}>
             {value}
           </Typography>
           <Typography variant="body2" color="text.secondary">
@@ -83,19 +118,34 @@ export default function DashboardPage() {
       </Stack>
 
       {isLoading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
           <CircularProgress />
         </Box>
       ) : (
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
-            <StatCard icon={<ArticleIcon />} label="Yayınlanan yazı" value={published} />
+            <StatCard
+              icon={<ArticleIcon />}
+              label="Yayınlanan yazı"
+              value={published}
+              color={BRAND.blue}
+            />
           </Grid>
           <Grid item xs={12} sm={4}>
-            <StatCard icon={<DraftsIcon />} label="Taslak" value={drafts} />
+            <StatCard
+              icon={<DraftsIcon />}
+              label="Taslak"
+              value={drafts}
+              color={BRAND.orange}
+            />
           </Grid>
           <Grid item xs={12} sm={4}>
-            <StatCard icon={<VisibilityIcon />} label="Toplam görüntülenme" value={totalViews} />
+            <StatCard
+              icon={<VisibilityIcon />}
+              label="Toplam görüntülenme"
+              value={totalViews}
+              color="#22c55e"
+            />
           </Grid>
         </Grid>
       )}

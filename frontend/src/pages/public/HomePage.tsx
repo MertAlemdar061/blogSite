@@ -12,12 +12,15 @@ import {
   Alert,
   Stack,
   Chip,
+  alpha,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import BoltIcon from '@mui/icons-material/Bolt';
 import { Link as RouterLink } from 'react-router-dom';
 import { postsApi } from '../../api/posts';
 import { categoriesApi } from '../../api/taxonomy';
 import PostCard from '../../components/PostCard';
+import { BRAND } from '../../theme';
 
 export default function HomePage() {
   const [page, setPage] = useState(1);
@@ -44,15 +47,50 @@ export default function HomePage() {
 
   return (
     <Container maxWidth="lg">
-      <Box sx={{ textAlign: 'center', mb: 5 }}>
-        <Typography variant="h2" sx={{ fontSize: { xs: '2rem', md: '3rem' }, mb: 1 }}>
+      {/* ---- Hero ---- */}
+      <Box sx={{ textAlign: 'center', mb: { xs: 5, md: 7 }, pt: { xs: 1, md: 3 } }}>
+        <Chip
+          icon={<BoltIcon sx={{ fontSize: 16 }} />}
+          label="Güncel teknoloji ve gündem"
+          size="small"
+          sx={{
+            mb: 3,
+            px: 1,
+            color: BRAND.orange,
+            bgcolor: alpha(BRAND.orange, 0.12),
+            border: `1px solid ${alpha(BRAND.orange, 0.35)}`,
+            '& .MuiChip-icon': { color: BRAND.orange },
+          }}
+        />
+
+        <Typography
+          variant="h2"
+          sx={{
+            fontSize: { xs: '2.2rem', sm: '3rem', md: '3.9rem' },
+            lineHeight: 1.08,
+            mb: 2,
+            background: `linear-gradient(180deg, #ffffff 20%, ${alpha('#93c5fd', 0.85)} 100%)`,
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}
+        >
           Teknoloji ve Gündem
         </Typography>
-        <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 400 }}>
+
+        <Typography
+          sx={{
+            color: 'text.secondary',
+            fontSize: { xs: '1rem', md: '1.15rem' },
+            maxWidth: 620,
+            mx: 'auto',
+          }}
+        >
           Güncel haberler, derinlemesine incelemeler ve sektör analizleri.
         </Typography>
       </Box>
 
+      {/* ---- Filtre + arama ---- */}
       <Stack
         direction={{ xs: 'column', md: 'row' }}
         spacing={2}
@@ -72,12 +110,13 @@ export default function HomePage() {
             />
           ))}
         </Stack>
+
         <TextField
           size="small"
           placeholder="Yazılarda ara..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          sx={{ minWidth: { xs: '100%', md: 280 } }}
+          sx={{ minWidth: { xs: '100%', md: 300 } }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -89,7 +128,7 @@ export default function HomePage() {
       </Stack>
 
       {isLoading && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
           <CircularProgress />
         </Box>
       )}
@@ -111,12 +150,13 @@ export default function HomePage() {
           </Grid>
 
           {data.meta.totalPages > 1 && (
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
               <Pagination
                 count={data.meta.totalPages}
                 page={page}
                 onChange={(_, p) => setPage(p)}
                 color="primary"
+                shape="rounded"
               />
             </Box>
           )}

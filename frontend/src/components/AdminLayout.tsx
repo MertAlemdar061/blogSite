@@ -5,7 +5,6 @@ import {
   Box,
   Drawer,
   Toolbar,
-  Typography,
   List,
   ListItemButton,
   ListItemIcon,
@@ -15,6 +14,8 @@ import {
   Menu,
   MenuItem,
   Divider,
+  Typography,
+  alpha,
 } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ArticleIcon from '@mui/icons-material/Article';
@@ -23,8 +24,10 @@ import AddIcon from '@mui/icons-material/Add';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LanguageIcon from '@mui/icons-material/Language';
 import { useAuth } from '../context/AuthContext';
+import { BRAND } from '../theme';
+import Logo from './Logo';
 
-const DRAWER_WIDTH = 240;
+const DRAWER_WIDTH = 248;
 
 const navItems = [
   { label: 'Panel', to: '/admin/dashboard', icon: <DashboardIcon /> },
@@ -46,13 +49,11 @@ export default function AdminLayout() {
 
   const drawer = (
     <Box>
-      <Toolbar>
-        <Typography variant="h6" sx={{ fontWeight: 800, color: 'primary.main' }}>
-          Tech <span style={{ color: '#ff6f00' }}>Gündem</span>
-        </Typography>
+      <Toolbar sx={{ px: 2.5 }}>
+        <Logo size="small" />
       </Toolbar>
       <Divider />
-      <List>
+      <List sx={{ pt: 1.5 }}>
         {navItems.map((item) => (
           <ListItemButton
             key={item.to}
@@ -60,8 +61,11 @@ export default function AdminLayout() {
             to={item.to}
             selected={location.pathname === item.to}
           >
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.label} />
+            <ListItemIcon sx={{ minWidth: 40, color: 'inherit' }}>{item.icon}</ListItemIcon>
+            <ListItemText
+              primary={item.label}
+              primaryTypographyProps={{ fontWeight: 600, fontSize: '0.94rem' }}
+            />
           </ListItemButton>
         ))}
       </List>
@@ -69,32 +73,57 @@ export default function AdminLayout() {
   );
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
       <AppBar
         position="fixed"
-        color="inherit"
         elevation={0}
         sx={{
           width: { sm: `calc(100% - ${DRAWER_WIDTH}px)` },
           ml: { sm: `${DRAWER_WIDTH}px` },
-          borderBottom: '1px solid #eaecef',
+          bgcolor: alpha('#080b14', 0.75),
+          backdropFilter: 'blur(16px)',
+          borderBottom: `1px solid ${BRAND.border}`,
         }}
       >
         <Toolbar sx={{ justifyContent: 'flex-end', gap: 1 }}>
-          <IconButton component={RouterLink} to="/" title="Siteyi görüntüle">
-            <LanguageIcon />
+          <Typography variant="body2" color="text.secondary" sx={{ mr: 'auto', ml: 1 }}>
+            Yönetim Paneli
+          </Typography>
+
+          <IconButton component={RouterLink} to="/" title="Siteyi görüntüle" size="small">
+            <LanguageIcon fontSize="small" />
           </IconButton>
-          <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-            <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}>
+
+          <IconButton onClick={(e) => setAnchorEl(e.currentTarget)} size="small">
+            <Avatar
+              sx={{
+                width: 32,
+                height: 32,
+                fontSize: '0.85rem',
+                fontWeight: 700,
+                background: `linear-gradient(135deg, ${BRAND.blue}, ${BRAND.orange})`,
+              }}
+            >
               {user?.name?.charAt(0)}
             </Avatar>
           </IconButton>
+
           <Menu
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             onClose={() => setAnchorEl(null)}
+            PaperProps={{
+              sx: {
+                mt: 1,
+                border: `1px solid ${BRAND.border}`,
+                bgcolor: alpha('#111827', 0.95),
+                backdropFilter: 'blur(12px)',
+              },
+            }}
           >
-            <MenuItem disabled>{user?.email}</MenuItem>
+            <MenuItem disabled sx={{ opacity: '0.7 !important' }}>
+              {user?.email}
+            </MenuItem>
             <Divider />
             <MenuItem onClick={handleLogout}>
               <ListItemIcon>
@@ -114,7 +143,9 @@ export default function AdminLayout() {
           '& .MuiDrawer-paper': {
             width: DRAWER_WIDTH,
             boxSizing: 'border-box',
-            borderRight: '1px solid #eaecef',
+            borderRight: `1px solid ${BRAND.border}`,
+            bgcolor: alpha('#0b1020', 0.75),
+            backdropFilter: 'blur(12px)',
           },
           display: { xs: 'none', sm: 'block' },
         }}
@@ -129,7 +160,6 @@ export default function AdminLayout() {
           flexGrow: 1,
           p: { xs: 2, md: 4 },
           width: { sm: `calc(100% - ${DRAWER_WIDTH}px)` },
-          bgcolor: 'background.default',
           minHeight: '100vh',
         }}
       >

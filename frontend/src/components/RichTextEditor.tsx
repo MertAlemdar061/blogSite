@@ -40,7 +40,7 @@ function Toolbar({ editor }: { editor: Editor }) {
       spacing={0.5}
       flexWrap="wrap"
       useFlexGap
-      sx={{ p: 1, borderBottom: '1px solid #eaecef' }}
+      sx={{ p: 1, borderBottom: '1px solid rgba(148, 163, 184, 0.14)' }}
     >
       <Tooltip title="Kalın">
         <ToggleButton
@@ -162,7 +162,15 @@ export default function RichTextEditor({ value, onChange }: Props) {
   if (!editor) return null;
 
   return (
-    <Box sx={{ border: '1px solid #eaecef', borderRadius: 2, bgcolor: 'background.paper' }}>
+    <Box
+      sx={{
+        border: '1px solid rgba(148, 163, 184, 0.14)',
+        borderRadius: 3,
+        bgcolor: 'rgba(17, 24, 39, 0.5)',
+        backdropFilter: 'blur(10px)',
+        overflow: 'hidden',
+      }}
+    >
       <Toolbar editor={editor} />
       <Box
         sx={{
@@ -171,23 +179,24 @@ export default function RichTextEditor({ value, onChange }: Props) {
           '& .ProseMirror': { outline: 'none', minHeight: 300, lineHeight: 1.7 },
           '& .ProseMirror p.is-editor-empty:first-of-type::before': {
             content: 'attr(data-placeholder)',
-            color: '#9aa0a6',
+            color: 'rgba(226, 232, 240, 0.35)',
             float: 'left',
             height: 0,
             pointerEvents: 'none',
           },
           '& .ProseMirror h2': { fontSize: '1.5rem', fontWeight: 700, marginTop: '1rem' },
           '& .ProseMirror pre': {
-            background: '#0d1117',
+            background: '#05080f',
+            border: '1px solid rgba(148, 163, 184, 0.14)',
             color: '#e6edf3',
             padding: '1rem',
             borderRadius: 8,
             overflowX: 'auto',
           },
           '& .ProseMirror blockquote': {
-            borderLeft: '4px solid #1565c0',
+            borderLeft: '3px solid #ff7a1a',
             paddingLeft: '1rem',
-            color: '#5f6368',
+            color: 'rgba(226, 232, 240, 0.6)',
             fontStyle: 'italic',
           },
           '& .ProseMirror img': { maxWidth: '100%', borderRadius: 8 },

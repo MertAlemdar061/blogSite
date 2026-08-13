@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { postsApi } from '../../api/posts';
 import PostCard from '../../components/PostCard';
+import { BRAND } from '../../theme';
 
 export default function CategoryPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -34,17 +35,26 @@ export default function CategoryPage() {
 
   return (
     <Container maxWidth="lg">
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="overline" color="text.secondary">
+      <Box sx={{ mb: 5 }}>
+        <Typography
+          variant="overline"
+          sx={{ color: BRAND.orange, fontWeight: 700, letterSpacing: '0.14em' }}
+        >
           {isTag ? 'Etiket' : 'Kategori'}
         </Typography>
-        <Typography variant="h3" sx={{ fontSize: { xs: '1.8rem', md: '2.4rem' } }}>
+        <Typography
+          variant="h3"
+          sx={{
+            fontSize: { xs: '1.9rem', md: '2.6rem' },
+            textTransform: isTag ? 'none' : 'capitalize',
+          }}
+        >
           {isTag ? `#${slug}` : slug}
         </Typography>
       </Box>
 
       {isLoading && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
           <CircularProgress />
         </Box>
       )}
@@ -65,12 +75,13 @@ export default function CategoryPage() {
             ))}
           </Grid>
           {data.meta.totalPages > 1 && (
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
               <Pagination
                 count={data.meta.totalPages}
                 page={page}
                 onChange={(_, p) => setPage(p)}
                 color="primary"
+                shape="rounded"
               />
             </Box>
           )}
